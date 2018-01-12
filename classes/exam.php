@@ -15,6 +15,45 @@ class exam
         $this->fm = new Format();
     }
 
+    public function addQuestion($data)
+    {
+        $quesNo = mysqli_real_escape_string($this->db->link, $data['quesNo']);
+        $ques = mysqli_real_escape_string($this->db->link, $data['ques']);
+        $ans = array();
+        $ans[1]=mysqli_real_escape_string($this->db->link, $data['ans1']);
+        $ans[2]=mysqli_real_escape_string($this->db->link, $data['ans2']);
+        $ans[3]=mysqli_real_escape_string($this->db->link, $data['ans3']);
+        $ans[4]=mysqli_real_escape_string($this->db->link, $data['ans4']);
+        $rightAns =mysqli_real_escape_string($this->db->link,$data['rightans']);
+
+        $query = "insert into tbl_ques(quesNo, ques) values ('$quesNo','$ques')";
+        $insert_row = $this->db->insert($query);
+        if($insert_row)
+        {
+            foreach ($ans as $key=>$ans)
+            {
+                if($ans != ''){
+                    if($rightAns == $key)
+                    {
+                        $rquery = "insert into tbl_ans (quesNo, rightAns, ans) values('$quesNo','1','$ans')";
+                    }else{
+                        $rquery = "insert into tbl_ans (quesNo, rightAns, ans) values('$quesNo','0','$ans')";
+                    }
+                    $insertrow = $this->db->insert($rquery);
+                    if($insertrow){
+                        continue;
+                    }else{
+                        die('Insert Error..');
+                    }
+
+                }
+            }
+            $msg = "<span class='success'>Question Added Succeessfully</span>";
+        }
+        return $msg;
+
+    }
+
     public function getAllQusetion(){
 
         $query = "select * from tbl_ques order by quesNo ";

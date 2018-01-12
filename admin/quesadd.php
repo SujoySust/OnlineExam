@@ -25,6 +25,13 @@ $next = $total+1;
 
     <div class="main">
         <h1>Add Question</h1>
+        <?php
+        if(isset($addQue)){
+            echo $addQue;
+        }
+
+        ?>
+
         <div class="adminpanel">
             <form action="" method="post">
                 <table>
@@ -32,12 +39,7 @@ $next = $total+1;
                     <tr>
                         <td> Question No </td>
                         <td>:</td>
-                        <td><input type="number" value="
-                                 <?php
-                            if(isset($next)) {
-                                echo $next;
-                            }
-                            ?> " name="quesNo"></td>
+                        <td><input type="number" value="<?php echo $next;?>" name="quesNo"></td>
 
                     </tr>
                     <tr>
