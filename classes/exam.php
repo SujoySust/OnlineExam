@@ -106,6 +106,23 @@ class exam
         $total = $getResult->num_rows;
         return $total;
     }
+    public function getQuestion(){
+        $query = "select * from tbl_ques";
+        $getdata = $this->db->select($query);
+        $result = $getdata->fetch_assoc();
+        return $result;
+    }
+    public function getQuesByNumber($number){
+        $query = "select * from tbl_ques where quesNo = '$number' ";
+        $getdata = $this->db->select($query);
+        $result = $getdata->fetch_assoc();
+        return $result;
+    }
+    public function getAnswer($number){
+        $query = "select * from tbl_ans where quesNo = '$number' ";
+        $getdata = $this->db->select($query);
+        return $getdata;
+    }
 }
 
 

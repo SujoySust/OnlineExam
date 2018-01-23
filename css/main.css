@@ -1,7 +1,7 @@
  *{margin:0;padding:0;outline:none}
  body{font-family:verdana}.phpcoding{width:900px; margin: 0 auto;background:#ddd}
  .headeroption {
-  background: #444 url("../img/banner.png") no-repeat scroll 0 0;
+  background: #444  url("../img/banner.png") no-repeat scroll 0 0;
   border-bottom: 2px solid #444444;
   height: 100px;
 }
@@ -25,9 +25,26 @@ input[type="submit"] {
   padding: 1px 10px;
 }
  .tblone{width:100%;border:1px solid #fff;margin:20px 0}
- .tblone td{padding:5px 10px;text-align:center;}
+ .tblone td {
+   font-size: 15px;
+   padding: 5px 10px;
+ }
+ table.tblone th {
+   background-color: #d0d0d0;
+   border: 1px solid #999;
+ }
  table.tblone tr:nth-child(2n+1){background:#fff;height:30px;}
  table.tblone tr:nth-child(2n){background:#f1f1f1;height:30px;}
+ .tblone td a{color:#3399FF;}
+ .success{
+   color:green;
+   display: block;
+   padding-bottom: 5px;}
+ .error,.empty,.disable {
+   color: red;
+   display: block;
+   padding-bottom: 5px;
+ }
 
 .main {
   background: #fff none repeat scroll 0 0;
@@ -117,4 +134,29 @@ input[type="submit"] {
   font-size: 16px;
   margin-bottom: 10px;
   padding-bottom: 10px;
+}
+.starttest{
+  border: 1px solid #3399FF;
+  margin: 0 auto;
+  padding: 20px;
+  width: 60%;
+}
+.starttest h2{
+  border-bottom: 1px solid #ddd;
+  font-size: 20px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+.starttest ul{margin: 0;padding: 0;list-style: none}
+.starttest ul li{padding: 20px}
+.starttest a{
+  background: #3399FF none repeat scroll 0 0;
+  border: 1px solid #ddd;
+  color: #444444;
+  display: block;
+  margin-top: 10px;
+  padding: 6px 10px;
+  text-align: center;
+  text-decoration: none;
 }
