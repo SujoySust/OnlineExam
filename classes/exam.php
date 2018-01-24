@@ -26,7 +26,7 @@ class exam
         $ans[4]=mysqli_real_escape_string($this->db->link, $data['ans4']);
         $rightAns =mysqli_real_escape_string($this->db->link,$data['rightans']);
 
-        $query = "insert into tbl_ques(quesNo, ques) values ('$quesNo','$ques')";
+        $query = "insert into tbl_ques(quesNo, ques, status) values ('$quesNo','$ques','0')";
         $insert_row = $this->db->insert($query);
         if($insert_row)
         {
@@ -107,10 +107,18 @@ class exam
         return $total;
     }
     public function getQuestion(){
-        $query = "select * from tbl_ques";
+        $query = "select * from tbl_ques where status = '1'";
         $getdata = $this->db->select($query);
-        $result = $getdata->fetch_assoc();
-        return $result;
+        if($getdata!=null){
+            if(isset($getdata)) {
+                $result = $getdata->fetch_assoc();
+                return $result;
+            }
+        }else{
+            header("Location:index.php");
+        }
+
+
     }
     public function getQuesByNumber($number){
         $query = "select * from tbl_ques where quesNo = '$number' ";
@@ -122,6 +130,29 @@ class exam
         $query = "select * from tbl_ans where quesNo = '$number' ";
         $getdata = $this->db->select($query);
         return $getdata;
+    }
+    public function updateQuestion(){
+
+        $query = "update tbl_ques set status = '1'";
+        $updated_row = $this->db->update($query);
+        if(isset($updated_row)){
+            $msg = "Examination Started...";
+        }
+        else{
+            $msg = "Examination Not Started!!!";
+        }
+        return $msg;
+    }
+    public function finishExam(){
+        $query = "update tbl_ques set status = '0'";
+        $updated_row = $this->db->update($query);
+        if(isset($updated_row)){
+            $msg = "Examination Finished...";
+        }
+        else{
+            $msg = "Examination Not Finished!!!";
+        }
+        return $msg;
     }
 }
 

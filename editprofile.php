@@ -36,6 +36,10 @@ if ($_SERVER['REQUEST_METHOD']=='POST')
                     ?>
                     <table class="tbl">
                         <tr>
+                            <td>Reg No</td>
+                            <td><input name="reg" type="text" value="<?php echo $result['reg'];?>"></td>
+                        </tr>
+                        <tr>
                             <td>Name</td>
                             <td><input name="name" type="text" value="<?php echo $result['name'];?>"></td>
                         </tr>

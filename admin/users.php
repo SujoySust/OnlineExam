@@ -42,6 +42,7 @@
 	<table class="tblone">
 		<tr>
 			<th>No</th>
+            <th>Reg No</th>
 			<th>Name</th>
 			<th>UserName</th>
 			<th>Email</th>
@@ -73,6 +74,7 @@
 				 ?>
 					
 			</td>
+            <td><?php echo $result['reg'];?></td>
 			<td><?php echo $result['name'];?></td>
 			<td><?php echo $result['username'];?></td>
 			<td><?php echo $result['email'];?></td>

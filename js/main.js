@@ -3,11 +3,12 @@ $(function () {
 
     $("#regsubmit").click(function () {
 
+        var reg = $("#reg").val();
         var name = $("#name").val();
         var username = $("#username").val();
         var password = $("#password").val();
         var email = $("#email").val();
-        var datastring = 'name='+name+'&username='+username+'&password='+password+'&email='+email;
+        var datastring = 'reg='+reg+'&name='+name+'&username='+username+'&password='+password+'&email='+email;
 
         $.ajax({
 

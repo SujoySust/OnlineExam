@@ -25,6 +25,7 @@ $total = $exm->getTotalRows();
                     if(isset($_SESSION['score'])){
                        echo $_SESSION['score'];
                         $userId = Session::get("userId");
+                        $reg = Session::get("reg");
                         $name = Session::get("name");
                         $score = $_SESSION['score'];
                         $getscore = $usr->getUserScore($userId);
@@ -32,9 +33,8 @@ $total = $exm->getTotalRows();
 
                         if($getscore==null){
 
-                            $usr->userScoreBoard($userId,$name,$score);
+                            $usr->userScoreBoard($userId,$reg,$name,$score);
                         }
-                        $usr->userScore($userId,$name,$score);
 
                        unset($_SESSION['score']);
                     }

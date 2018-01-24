@@ -13,7 +13,8 @@ $total = $exm->getTotalRows();
             <table class="tblone">
                 <tr>
                     <th>No</th>
-                    <th width="70%">Name</th>
+                    <th width="20%">Reg No</th>
+                    <th width="50%">Name</th>
                     <th width="20%">Score</th>
                 </tr>
                 <?php
@@ -28,6 +29,7 @@ $total = $exm->getTotalRows();
                 <tr>
 
                     <td><?php echo $i; ?></td>
+                    <td><?php echo $result['reg']; ?></td>
                     <td><?php echo $result['name']; ?></td>
                     <td><?php echo $result['score']; ?></td>
                 </tr>

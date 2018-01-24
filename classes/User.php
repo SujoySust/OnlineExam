@@ -15,18 +15,20 @@ class User
 		$this->fm = new Format();
 	}
 
-    public function userRegistration($name,$username,$password,$email){
+    public function userRegistration($reg,$name,$username,$password,$email){
+        $reg = $this->fm->validation($reg);
         $name = $this->fm->validation($name);
         $username = $this->fm->validation($username);
         $password = $this->fm->validation($password);
         $email = $this->fm->validation($email);
 
+        $reg = mysqli_real_escape_string($this->db->link,$reg);
         $name = mysqli_real_escape_string($this->db->link,$name);
         $username = mysqli_real_escape_string($this->db->link,$username);
         $password = mysqli_real_escape_string($this->db->link,md5($password));
         $email = mysqli_real_escape_string($this->db->link,$email);
 
-        if($name == ""||$username==""||$password==""||$email==""){
+        if($reg== ""||$name == ""||$username==""||$password==""||$email==""){
             echo "<span class='error'>Fileds Must not be empty !!</span>";
             exit();
 
@@ -41,7 +43,7 @@ class User
                 echo "<span class='error'>Email address already exist</span>";
             }
             else{
-                $query = "insert into tbl_user(name,username,password,email)values('$name','$username','$password','$email')";
+                $query = "insert into tbl_user(reg,name,username,password,email)values('$reg','$name','$username','$password','$email')";
                 $inserted_row = $this->db->insert($query);
                 if($inserted_row){
                     echo "<span class='success'>Registration Successful</span>";
@@ -75,6 +77,7 @@ class User
                 }else{
                     Session::init();
                     Session::set("login",true);
+                    Session::set("reg",$value['reg']);
                     Session::set("userId",$value['userId']);
                     Session::set("username",$value['username']);
                     Session::set("name",$value['name']);
@@ -166,14 +169,17 @@ class User
      }
 
      public function updateUserData($userId,$data){
+	     $reg = $this->fm->validation($data['reg']);
          $name = $this->fm->validation($data['name']);
          $username = $this->fm->validation($data['username']);
          $email = $this->fm->validation($data['email']);
+         $reg = mysqli_real_escape_string($this->db->link,$reg);
          $name = mysqli_real_escape_string($this->db->link,$name);
          $username = mysqli_real_escape_string($this->db->link,$username);
          $email = mysqli_real_escape_string($this->db->link,$email);
          $query = "update tbl_user
                     set 
+                    reg = '$reg',
                     name = '$name',
                     username = '$username',
                     email = '$email'
@@ -195,31 +201,76 @@ class User
          $result = $this->db->select($query);
          return $result;
      }
-     public function userScore($userId,$name,$score){
-         $userId = $this->fm->validation($userId);
-         $name = $this->fm->validation($name);
-         $score = $this->fm->validation($score);
-         $userId = mysqli_real_escape_string($this->db->link, $userId);
-         $name = mysqli_real_escape_string($this->db->link,$name);
-         $score = mysqli_real_escape_string($this->db->link,$score);
 
-         $query = "insert into tbl_score(userId,name,score)values('$userId','$name','$score')";
-         $inserted_row = $this->db->insert($query);
-
-     }
-    public function userScoreBoard($userId,$name,$score){
+    public function userScoreBoard($userId,$reg,$name,$score){
         $userId = $this->fm->validation($userId);
+        $reg = $this->fm->validation($reg);
         $name = $this->fm->validation($name);
         $score = $this->fm->validation($score);
         $userId = mysqli_real_escape_string($this->db->link, $userId);
+        $reg = mysqli_real_escape_string($this->db->link, $reg);
         $name = mysqli_real_escape_string($this->db->link,$name);
         $score = mysqli_real_escape_string($this->db->link,$score);
 
-        $query = "insert into tbl_scoreboard(userId,name,score)values('$userId','$name','$score')";
+        $query = "insert into tbl_scoreboard(userId,reg,name,score)values('$userId','$reg','$name','$score')";
         $inserted_row = $this->db->insert($query);
     }
     public function getAllScore(){
         $query = "select * from tbl_scoreboard order by score desc,id asc";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function getPersonalScore($reg){
+        $query = "select * from tbl_score where reg = '$reg'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+    public function resetScoreBord(){
+        $query = "delete from tbl_scoreboard";
+        $deldata = $this->db->delete($query);
+    }
+    public function resetPastScore(){
+        $query = "delete from tbl_scoreteacher";
+        $deldata = $this->db->delete($query);
+        if(isset($deldata)){
+            $msg = "Previous Result Successfully Removed";
+            return $msg;
+        }else{
+            $msg = "Previous Result Not Removed";
+            return $msg;
+        }
+    }
+
+    public function addToTeacherScore($userId,$reg, $name,$score){
+
+        $userId = $this->fm->validation($userId);
+        $reg = $this->fm->validation($reg);
+        $name = $this->fm->validation($name);
+        $score = $this->fm->validation($score);
+        $userId = mysqli_real_escape_string($this->db->link, $userId);
+        $reg = mysqli_real_escape_string($this->db->link, $reg);
+        $name = mysqli_real_escape_string($this->db->link,$name);
+        $score = mysqli_real_escape_string($this->db->link,$score);
+
+        $query = "insert into tbl_scoreteacher(userId,reg,name,score)values('$userId','$reg','$name','$score')";
+        $inserted_row = $this->db->insert($query);
+    }
+    public function addToStudentScore($userId,$reg, $name,$score){
+
+        $userId = $this->fm->validation($userId);
+        $reg = $this->fm->validation($reg);
+        $name = $this->fm->validation($name);
+        $score = $this->fm->validation($score);
+        $userId = mysqli_real_escape_string($this->db->link, $userId);
+        $reg = mysqli_real_escape_string($this->db->link, $reg);
+        $name = mysqli_real_escape_string($this->db->link,$name);
+        $score = mysqli_real_escape_string($this->db->link,$score);
+
+        $query = "insert into tbl_score(userId,reg,name,score)values('$userId','$reg','$name','$score')";
+        $inserted_row = $this->db->insert($query);
+    }
+    public function getAllScoreTeacher(){
+        $query = "select * from tbl_scoreteacher";
         $result = $this->db->select($query);
         return $result;
     }

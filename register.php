@@ -8,6 +8,10 @@
 	<div class="segment">
 	<form action="" method="post">
 		<table>
+        <tr>
+            <td>Reg No</td>
+            <td><input type="text" name="reg" id="reg"></td>
+        </tr>
 		<tr>
            <td>Name</td>
            <td><input type="text" name="name" id="name"></td>

@@ -6,6 +6,7 @@
         if($login == true){
             ?>
             <li><a href="profile.php">Profile</a></li>
+            <li><a href="scoreboard.php">Scoreboard</a></li>
             <li><a href="exam.php">Exam</a></li>
             <li><a href="?action=logout">Logout</a></li>
         <?php }else{?>
