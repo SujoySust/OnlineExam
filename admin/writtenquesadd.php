@@ -1,21 +1,22 @@
 <?php
 $filepath = realpath(dirname(__FILE__));
 include_once ($filepath.'/inc/header.php');
-include 'inc/navbar.php';
+include 'inc/navbarwritten.php';
 include_once ($filepath.'/../classes/exam.php');
 $exm = new exam();
 ?>
-<?php
-// Session::checkLogin();
-?>
+<style>
+    .adminpanel{width: 480px;color:#fff;margin: 20px auto 0; padding: 10px;border: 1px solid #ddd}
+</style>
 
 <?php
 if ($_SERVER['REQUEST_METHOD']=='POST')
 {
-    $addQue = $exm->addQuestion($_POST);
+    $addQue = $exm->addWrittenQuestion($_POST);
 }
-$total =$exm->getTotalRows();
+$total =$exm->getTotalWrittenRows();
 $next = $total+1;
+echo $next;
 
 ?>
 
@@ -46,34 +47,11 @@ $next = $total+1;
                         <td><input type="text" name="ques" placeholder="Enter Question .." required></td>
 
                     </tr>
-                    <tr>
-                        <td>Choice One</td>
-                        <td>:</td>
-                        <td><input type="text" name="ans1" placeholder="Enter Choice one .." required></td>
 
-                    </tr>
                     <tr>
-                        <td>Choice Two</td>
+                        <td>Marks</td>
                         <td>:</td>
-                        <td><input type="text" name="ans2" placeholder="Enter Choice Two." required></td>
-
-                    </tr>
-                    <tr>
-                        <td>Choice Three</td>
-                        <td>:</td>
-                        <td><input type="text" name="ans3" placeholder="Enter Choice Three .." required></td>
-
-                    </tr>
-                    <tr>
-                        <td> Choice Four</td>
-                        <td>:</td>
-                        <td><input type="text" name="ans4" placeholder="Enter Choice Four .." required></td>
-
-                    </tr>
-                    <tr>
-                        <td>Correct Number</td>
-                        <td>:</td>
-                        <td><input type="number" name="rightans" required></td>
+                        <td><input type="number" name="marks" required></td>
 
                     </tr>
                     <tr>

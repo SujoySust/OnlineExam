@@ -17,6 +17,7 @@ $(function () {
             data: datastring,
             success:function (data) {
                 $("#state").html(data);
+                window.location = 'index.php';
             }
         });
         return false;

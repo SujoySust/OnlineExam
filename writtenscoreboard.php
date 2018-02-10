@@ -3,8 +3,8 @@
 <?php
 
 Session::checkSession();
-$question = $exm->getQuestion();
-$total = $exm->getTotalRows();
+//$question = $exm->getQuestion();
+//$total = $exm->getTotalRows();
 
 ?>
     <div class="main">
@@ -15,24 +15,29 @@ $total = $exm->getTotalRows();
                     <th>No</th>
                     <th width="20%">Reg No</th>
                     <th width="50%">Name</th>
-                    <th width="20%">Score</th>
+                    <th width="20%">Marks</th>
                 </tr>
                 <?php
 
-                $scoredata = $usr->getAllScore();
+                $scoredata = $usr->getWrittenData();
                 if($scoredata){
                     $i=0;
                     while($result = $scoredata->fetch_assoc())
                     {
                         $i++;
                         ?>
-                <tr>
+                        <tr>
 
-                    <td><?php echo $i; ?></td>
-                    <td><?php echo $result['reg']; ?></td>
-                    <td><?php echo $result['name']; ?></td>
-                    <td><?php echo $result['score']; ?></td>
-                </tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $result['reg']; ?></td>
+                            <td><?php echo $result['username']; ?></td>
+                            <?php if ($result['status']==0){?>
+                            <td>Pending</td>
+                            <?php }else{?>
+                            <td><?php echo $result['marks']; ?></td>
+                            <?php }?>
+
+                        </tr>
                     <?php } }?>
             </table>
 

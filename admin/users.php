@@ -1,6 +1,7 @@
 <?php 
     $filepath = realpath(dirname(__FILE__));
 	include_once ($filepath.'/inc/header.php');
+	include 'inc/navbar.php';
 	include_once ($filepath.'/../classes/User.php');
 	$user = new User();
 ?>

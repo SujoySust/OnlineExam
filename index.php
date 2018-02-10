@@ -32,7 +32,12 @@ Session::checkLogin();
         <span class="error" style="display: none">Email or password Not matched</span>
         <span class="disable" style="display: none">User id disable</span>
 	</div>
-
+    <div class="segment" style="margin-right:30px;">
+        <img src="img/pic1.png"/>
+    </div>
+    <div class="segment">
+        <img src="img/pic1.png"/>
+    </div>
 
 	
 </div>

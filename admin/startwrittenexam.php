@@ -1,16 +1,16 @@
 <?php
 $filepath = realpath(dirname(__FILE__));
 include_once ($filepath.'/inc/header.php');
-include 'inc/navbar.php';
+include 'inc/navbarwritten.php';
 ?>
 <?php
 // Session::checkLogin();
 if(isset($_GET['del'])){
 
-    $update1 = $exm->updateQuestion();
+    $updatewritten = $exm->updateAllWrittenQuestion();
 }
 if(isset($_GET['fin'])){
-    $update2 = $exm->finishExam();
+    $finishwritten = $exm->finishWrittenExam();
 }
 ?>
 
@@ -18,15 +18,15 @@ if(isset($_GET['fin'])){
         <h1>Admin Panel</h1>
         <div class="starttest">
             <?php
-            if (isset($update1)){
+            if (isset($updatewritten)){
             ?>
-            <h2 style="color: darkgreen"><?php echo $update1; ?></h2>
+            <h2 style="color: darkgreen"><?php echo $updatewritten; ?></h2>
                 <?php }?>
 
             <?php
-            if (isset($update2)){
+            if (isset($finishwritten)){
                 ?>
-                <h2 style="color: red"><?php echo $update2; ?></h2>
+                <h2 style="color: red"><?php echo $finishwritten; ?></h2>
             <?php }?>
             <a href="?del=2"">Start Exam</a>
             <a href="?fin=3"">Finish Exam</a>

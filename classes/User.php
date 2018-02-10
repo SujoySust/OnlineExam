@@ -93,20 +93,51 @@ class User
 
 
 
-	public function getAdminData($data){
+	public function updateAdminData($data){
 
           $adminUser = $this->fm->validation($data['adminUser']);
           $adminPass = $this->fm->validation($data['adminPass']);
           $adminUser = mysqli_real_escape_string($this->db->link,$adminUser);
           $adminPass = mysqli_real_escape_string($this->db->link,md5($adminPass));
 
+        $query = "update tbl_admin
+                    set 
+                    adminUser = '$adminUser',
+                    adminPass = '$adminPass' ";
+
+        $updated_row = $this->db->update($query);
+        return $updated_row;
+
+
 	}
+    public function getAdminData(){
+
+        $query = "select * from tbl_admin";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
     public function getUserData($userId){
 
         $query = "select * from tbl_user where userId = '$userId'";
         $result = $this->db->select($query);
         return $result;
     }
+
+    public function getWrittenScore($userId){
+        $query = "select * from tbl_writtenscore where userId = '$userId'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function getWrittenData(){
+        $query = "select * from tbl_writtenscore";
+        $result = $this->db->select($query);
+        return $result;
+
+    }
+
+
      public function getAllUser(){
 
           $query = "select * from tbl_user order by userId desc";
@@ -225,12 +256,38 @@ class User
         $result = $this->db->select($query);
         return $result;
     }
+
+    public function getPersonalWrittenScore($id){
+        $query = "select * from tbl_writtenstudentscore where userId = '$id'";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
     public function resetScoreBord(){
         $query = "delete from tbl_scoreboard";
         $deldata = $this->db->delete($query);
     }
+    public function resetWrittenScoreBord(){
+        $query = "delete from tbl_writtenscore";
+        $deldata = $this->db->delete($query);
+        $query2 = "delete from tbl_writtenans";
+        $deldata2 = $this->db->delete($query2);
+    }
     public function resetPastScore(){
         $query = "delete from tbl_scoreteacher";
+        $deldata = $this->db->delete($query);
+        if(isset($deldata)){
+            $msg = "Previous Result Successfully Removed";
+            return $msg;
+        }else{
+            $msg = "Previous Result Not Removed";
+            return $msg;
+        }
+    }
+
+
+    public function resetPastWrittenScore(){
+        $query = "delete from tbl_writtenteacherscore";
         $deldata = $this->db->delete($query);
         if(isset($deldata)){
             $msg = "Previous Result Successfully Removed";
@@ -255,6 +312,8 @@ class User
         $query = "insert into tbl_scoreteacher(userId,reg,name,score)values('$userId','$reg','$name','$score')";
         $inserted_row = $this->db->insert($query);
     }
+
+
     public function addToStudentScore($userId,$reg, $name,$score){
 
         $userId = $this->fm->validation($userId);
@@ -269,10 +328,82 @@ class User
         $query = "insert into tbl_score(userId,reg,name,score)values('$userId','$reg','$name','$score')";
         $inserted_row = $this->db->insert($query);
     }
+
+
+    public function addToTeacherWrittenScore($userId,$reg, $username,$marks){
+
+        $userId = $this->fm->validation($userId);
+        $reg = $this->fm->validation($reg);
+        $username = $this->fm->validation($username);
+        $marks = $this->fm->validation($marks);
+        $userId = mysqli_real_escape_string($this->db->link, $userId);
+        $reg = mysqli_real_escape_string($this->db->link, $reg);
+        $username = mysqli_real_escape_string($this->db->link,$username);
+        $marks = mysqli_real_escape_string($this->db->link,$marks);
+
+        $query = "insert into tbl_writtenteacherscore(userId,reg,username,marks)values('$userId','$reg','$username','$marks')";
+        $inserted_row = $this->db->insert($query);
+    }
+
+
+    public function addToStudentWrittenScore($userId,$reg, $username,$marks){
+
+        $userId = $this->fm->validation($userId);
+        $reg = $this->fm->validation($reg);
+        $username = $this->fm->validation($username);
+        $marks = $this->fm->validation($marks);
+        $userId = mysqli_real_escape_string($this->db->link, $userId);
+        $reg = mysqli_real_escape_string($this->db->link, $reg);
+        $username = mysqli_real_escape_string($this->db->link,$username);
+        $marks = mysqli_real_escape_string($this->db->link,$marks);
+
+        $query = "insert into tbl_writtenstudentscore(userId,reg,username,marks)values('$userId','$reg','$username','$marks')";
+        $inserted_row = $this->db->insert($query);
+    }
+
+
+
     public function getAllScoreTeacher(){
         $query = "select * from tbl_scoreteacher";
         $result = $this->db->select($query);
         return $result;
+    }
+
+    public function getAllWrittenScoreTeacher(){
+        $query = "select * from tbl_writtenteacherscore";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function updateWrittenData($userId,$total){
+        $query = "update tbl_writtenscore
+                    set
+                    marks = '$total',
+                    status = '1'
+                    where userId = '$userId'";
+        $updated_row = $this->db->update($query);
+        if($updated_row)
+        {
+            $msg = "<span>Marks Added To ScoreBoard </span>";
+            return $msg;
+        }
+        else{
+            $msg = "<span>Marks Not Added To ScoreBoard /span>";
+            return $msg;
+        }
+
+    }
+
+    public function deletePersonalScore($userId){
+        $query = "delete from tbl_score where id = '$userId'";
+        $deldata = $this->db->delete($query);
+        return $deldata;
+    }
+
+    public function deletePersonalWrittenScore($id){
+        $query = "delete from tbl_writtenstudentscore where id = '$id'";
+        $deldata = $this->db->delete($query);
+        return $deldata;
     }
 }
 

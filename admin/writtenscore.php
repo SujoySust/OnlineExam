@@ -1,32 +1,25 @@
 <?php
 $filepath = realpath(dirname(__FILE__));
 include_once ($filepath.'/inc/header.php');
-include 'inc/navbar.php'
+include 'inc/navbarwritten.php';
 ?>
 
 <?php
 if(isset($_GET['del'])){
 
-    $scoredata = $usr->getAllScore();
-    if($scoredata){
-        while($result = $scoredata->fetch_assoc())
-        {
-            $userId = $result['userId'];
-            $reg =$result['reg'];
-            $name = $result['name'];
-            $score = $result['score'];
-            $usr->addToTeacherScore($userId,$reg, $name,$score);
-            $usr->addToStudentScore($userId,$reg, $name,$score);
-        }
-    }
-    $usr->resetScoreBord();
+   $remove =  $usr->resetPastWrittenScore();
 }
 ?>
 
     <div class="main">
-        <h1>Student Score List</h1>
+        <h1>Previous Score List</h1>
         <div class="starttest">
-            <a href="?del=2"">Reset ScoreBoard</a>
+            <?php
+            if (isset($remove)){
+            ?>
+            <h3><?php echo $remove ;?></h3>
+                <?php }?>
+            <a onclick="return confirm('Are You Sure to Delete All The Past Result')" href="?del=2">Delete All</a>
         </div>
 
 
@@ -36,16 +29,16 @@ if(isset($_GET['del'])){
                     <th>No</th>
                     <th width="20%">Reg No</th>
                     <th width="50%">Name</th>
-                    <th width="20%">Score</th>
+                    <th width="20%">Marks</th>
                 </tr>
                 <?php
-                $scoredata = $usr->getAllScore();
+                $scoredata = $usr->getAllWrittenScoreTeacher();
                 if($scoredata){
                     $i=0;
                     while($result = $scoredata->fetch_assoc())
                     {
                         $i++;
-                      ?>
+                        ?>
                         <tr>
                             <td>
                                 <?php echo "<span>".$i."</span>";?>
@@ -53,8 +46,8 @@ if(isset($_GET['del'])){
                             </td>
 
                             <td><?php echo $result['reg'];?></td>
-                            <td><?php echo $result['name'];?></td>
-                            <td><?php echo $result['score'];?></td>
+                            <td><?php echo $result['username'];?></td>
+                            <td><?php echo $result['marks'];?></td>
                         </tr>
                     <?php } }?>
             </table>

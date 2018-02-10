@@ -1,21 +1,14 @@
 <?php 
     $filepath = realpath(dirname(__FILE__));
 	include_once ($filepath.'/inc/header.php');
-	include 'inc/navbar.php';
+	include 'inc/navbarwritten.php';
 	include_once ($filepath.'/../classes/exam.php');
 	$exm = new exam();
 ?>
 
 <?php
- if(isset($_GET['edit'])){
- 	$delid = (int)$_GET['del'];
- 	$delQues = $exm->DeleteQues($delid);
- }
-?>
-
-<?php
 if(isset($_GET['delall'])){
-    $delAllQues = $exm->DeleteAllQues();
+    $delAllQues = $exm->DeleteAllWrittenQues();
 }
 ?>
 
@@ -47,12 +40,13 @@ if(isset($_GET['delall'])){
 	<table class="tblone">
 		<tr>
 			<th>No</th>
-			<th width="70%">Questions</th>
-			<th width="20%">Action</th>
+			<th width="65%">Questions</th>
+            <th width="10%">Marks</th>
+			<th width="15%">Action</th>
 		</tr>
       <?php
 
-        $questiondata = $exm->getAllQusetion();
+        $questiondata = $exm->getWrittenQuesList();
           if($questiondata){
           $i=0;
      	   while($result = $questiondata->fetch_assoc())
@@ -69,24 +63,23 @@ if(isset($_GET['delall'])){
 			</td>
 
 
-            <td><?php echo $result['ques'];?></td>
+            <td><?php echo $result['question'];?></td>
+              <td><?php echo $result['marks'];?></td>
 
 
 
             <td>
-              <a href="editques.php?edit=<?php echo $result['quesNo'];?>" style="
-	text-decoration: none;
-	font-size: 15px;
-	border: none;
-	outline: 0;
-	display: inline-block;
-	padding: 7px;
-	color: #ffff00;
-	background-color: #000;
-	text-align: center;
-	cursor: pointer;
-	width: 95%;
-">EDIT</a>
+              <a href="editwrittenques.php?edit= <?php echo $result['quesNo'];?>" style="text-decoration: none;
+            font-size: 20px;
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 7px;
+            color: #ffff00;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 95%;">Edit</a>
 			</td>
           </tr>
             <?php } }?>

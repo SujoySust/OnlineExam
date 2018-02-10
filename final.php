@@ -29,7 +29,7 @@ $total = $exm->getTotalRows();
                         $name = Session::get("name");
                         $score = $_SESSION['score'];
                         $getscore = $usr->getUserScore($userId);
-                       // $result=$getscore->num_rows;
+                        // $result=$getscore->num_rows;
 
                         if($getscore==null){
 

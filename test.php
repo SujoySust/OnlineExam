@@ -5,9 +5,10 @@
                 <li><a href="?action=logout">Logout</a></li>
 
         </ul>
-        <span style="float: right;color: brown">
-                <strong><?php echo Session::get("name");?></strong>
-            </span>
+        <span style="float: right;background: #00007C;padding: 10px 20px;">
+            <strong><?php echo Session::get("name");?></strong>
+        </span>
+
     </div>
 <?php
 Session::checkSession();
@@ -45,7 +46,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 			<tr>
 				<td>
-				 <input type="radio" name="ans" value="<?php echo $result['id'];?>"/>
+				 <input type="radio" name="ans" value="<?php echo $result['id'];?>" style="width: 40px;height: 20px;"/>
                     <?php echo $result['ans'];?>
 				</td>
 			</tr>
